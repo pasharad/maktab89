@@ -1,5 +1,7 @@
 import re
 
+import bank_account
+
 
 class Customer:
     def __init__(self, first_name, last_name, phone, email) -> None:
@@ -31,8 +33,8 @@ class Customer:
 
 
 class BankAccount:
-    WAGE_AMOUNT = 600  # کارمزد
-    MIN_BALANCE = 10000  # حداقل موجودی
+    WAGE_AMOUNT = 0  # کارمزد
+    MIN_BALANCE = 1000  # حداقل موجودی
 
     class MinBalanceError(Exception):
         pass
@@ -48,8 +50,8 @@ class BankAccount:
         self.__balance = x
 
     def check_minimum_balance(self, amount_to_withdraw):  # چک کردن حداقل موجودی
-        assert type(amount_to_withdraw) == int and (self.__balance - amount_to_withdraw) >= self.MIN_BALANCE, 'you can not withdraw'
-        return (self.__balance - amount_to_withdraw) >= self.MIN_BALANCE
+        assert type(amount_to_withdraw) == int and (self.__balance - amount_to_withdraw) >= self.MIN_BALANCE , 'you can not withdraw'
+        return (self.__balance - int(amount_to_withdraw)) >= self.MIN_BALANCE
 
     def set_owner(self, owner):  # تغییر صاحب حساب
         self.__owner = owner
@@ -58,10 +60,13 @@ class BankAccount:
         return self.__owner
 
     def withdraw(self, amount):  # برداشت وجه
+        print('*' * 60)
         if self.check_minimum_balance(amount):
-            raise BankAccount.MinBalanceError("NOT Enough balance to withdraw!")
-        self.__balance -= amount
-        self.__balance -= self.WAGE_AMOUNT   # برداشت کارمزد
+            self.__balance -= amount
+            self.__balance -= self.WAGE_AMOUNT
+            print('salam' * 60)
+        else:
+            raise bank_account.BankAccount.MinBalanceError('your balance is not enough')
 
     def deposit(self, amount):  # واریز وجه
         assert type(amount) == int, 'invalid amount'
@@ -75,7 +80,7 @@ class BankAccount:
         assert isinstance(target_account, BankAccount), 'your target not found'
         self.withdraw(amount)  # برداشت از حساب خود
         target_account.deposit(amount)  # واریز به حساب مقصد
-
+        print('*'*60)
     @classmethod
     def change_wage(cls, new_amount):
         assert type(new_amount) == int and new_amount >= 0, 'invalid amount'
