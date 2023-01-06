@@ -1,0 +1,2 @@
+for catching ip address: use nslookup site address | grep Address
+then use : nmap ip address

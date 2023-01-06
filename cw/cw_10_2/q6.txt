@@ -1,0 +1,1 @@
+use : sudo nmap -O -v ipaddress

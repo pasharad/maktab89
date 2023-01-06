@@ -1,0 +1,1 @@
+for show active connection use : netstat -natp

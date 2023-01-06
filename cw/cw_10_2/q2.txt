@@ -1,0 +1,1 @@
+how can get domain records like maktabsharif.ir: nslookup www.maktabsharif.ir
