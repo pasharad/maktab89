@@ -1,0 +1,22 @@
+test kardane yeki budane kalame entekhab shode ba list
+test kardane vojood dashtane  kalame entekhab shode daroon list avalie
+test entekhab kalame az yek list khali error bayad bede
+test tedad joona dorost bashe
+test kalame objecti az class sakhte kamale bashe
+test gharghiri dorste kalame
+test gharargiri 2 harf dar kalame
+test miss shodan harf
+test kam kardan joon
+test bordan
+test bakhtan
+test neshoon nadadn kalame
+test neshoon dadan kalame baad az bord
+test neshoon dadan kalame baad az bakhtan
+test error dar soorate vared kardane char eshtebah
+test error dar soorate vared kardane char gheyr harf
+test kam nakardane joon dar soorate vared kardan char gheyr harf
+test fargh nadashtan hroof koochik bozorg
+test tamoom shodane bazi
+test kharej shodan az bazi ba vared kardane x
+test kam nakardane joon dar soorate vard kardane kalame tekrari
+
