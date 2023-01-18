@@ -1,0 +1,6 @@
+CREATE TABLE Transfer(
+	id PRIMARY KEY,
+	Method_Transfer TEXT DEFAULT 'post by',
+	Transfer_id INT,
+	FOREIGN KEY (Transfer_id) REFERENCES 'Order')
+ALTER TABLE 'Order' ADD COLUMN Transfer_id INT;

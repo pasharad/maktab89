@@ -26,6 +26,7 @@ class Bank:
 
     def get_word(self):
         response = requests.get(f"{self.api}", headers={'X-Api-Key': f"{self.api_key}"}, params={type: 'noun'})
+
         if response.status_code == 200:
             word = json.loads(response.text)
             self.api_response_status = False

@@ -1,0 +1,9 @@
+INSERT INTO Shipper (CompanyName,Phone)
+VALUES ('microsoft', '503 553322')
+;
+INSERT INTO Shipper (CompanyName,Phone)
+VALUES ('google', '503 593322')
+;
+INSERT INTO Shipper (CompanyName,Phone)
+VALUES ('amazon', '503 573322')
+;
