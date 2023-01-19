@@ -1,0 +1,6 @@
+select fa.actor_id,count(f.title) as cnt, concat(a.first_name,' ',a.last_name)
+from actor a
+join film_actor fa on a.actor_id=fa.actor_id
+join film f on fa.film_id=f.film_id
+group by fa.actor_id, a.first_name, a.last_name
+order by fa.actor_id;
