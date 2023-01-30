@@ -8,6 +8,9 @@ class Menu:
     login_menu = [
         'Bank Account Management',
         'Buy Ticket',
+        'Use_ticket',
+        'Ticket List',
+        'Account Info',
         'Log out']
 
     bank_account_menu = [
@@ -19,8 +22,7 @@ class Menu:
     buy_ticket_menu = [
         'Chargeable',
         'Disposable(you can use it only once)',
-        'Date Expire',
-        'Show Ticket List']
+        'Date Expire']
 
     admin_menu = [
         'Make transport',
