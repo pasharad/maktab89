@@ -30,6 +30,14 @@ class Menu:
         'logout'
     ]
 
+    metro_menu = '''
+    __  __      _
+|  \/  | ___| |_ _ __ ___
+| |\/| |/ _ \ __| '__/ _ 
+
+| |  | |  __/ |_| | | (_) |
+|_|  |_|\___|\__|_|  \___/\n
+'''
 
 # menu = Menu
 # for v in enumerate(menu.buy_ticket_menu):
