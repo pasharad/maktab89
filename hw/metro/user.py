@@ -1,5 +1,6 @@
 from uuid import uuid4
 from bank_account import *
+import re
 
 
 class User:
@@ -39,3 +40,24 @@ class User:
     def __repr__(self):
         return f'User: {self.fname} {self.lname}\nUser ID: {self.user_id}' \
                f'\nBank Account ID: {self.bank_account.bank_account_id}'
+
+
+def name_validation(name: str):
+    if name.isalpha():
+        return True
+    else:
+        return False
+
+
+def national_code_validation(national: str):
+    if national.isnumeric() and len(national) == 10:
+        return True
+    else:
+        return False
+
+
+def password_validation(password):
+    if re.match(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$', password):
+        return True
+    else:
+        return False
