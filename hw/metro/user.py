@@ -22,6 +22,10 @@ class User:
     def backup_pass(self):
         return self.__backup_pass
 
+    @property
+    def national_code(self):
+        return self.__nat_code
+
     @backup_pass.setter
     def new_pass(self, new_pass):
         self.__backup_pass = new_pass
