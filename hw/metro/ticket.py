@@ -7,6 +7,7 @@ class Ticket(ABC):
     def __init__(self):
         self.creation_date = datetime.now()
         self.ticket_id = uuid4()
+        self.cost = 0
         self.balance = 0
 
     @abstractmethod
@@ -21,6 +22,7 @@ class Ticket(ABC):
 class ChargeableCard(Ticket):
     def __init__(self):
         super().__init__()
+        self.cost = 5
 
     def expire(self):
         pass
@@ -41,6 +43,7 @@ class ChargeableCard(Ticket):
 class ExpirationCard(Ticket):
     def __init__(self):
         super().__init__()
+        self.cost = 55
         self.expire_date = self.creation_date + timedelta(days=365)
         self.balance = 50
 
@@ -62,6 +65,7 @@ class ExpirationCard(Ticket):
 class DisposableTicket(Ticket):
     def __init__(self):
         super().__init__()
+        self.cost = 2
         self.balance = 1
 
     @abstractmethod
