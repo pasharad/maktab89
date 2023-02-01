@@ -27,6 +27,9 @@ class Menu:
     admin_menu = [
         'Make transport',
         'Edit transport',
+        'Make ticket',
+        'Ban User',
+        'Show Ticket Created',
         'logout'
     ]
 
