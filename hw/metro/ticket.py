@@ -47,7 +47,6 @@ class ExpirationCard(Ticket):
         self.expire_date = self.creation_date + timedelta(days=365)
         self.balance = 50
 
-    @abstractmethod
     def expire(self):
         return datetime.now()
 
@@ -56,7 +55,6 @@ class ExpirationCard(Ticket):
         self.balance -= amount
         return self.balance
 
-    @abstractmethod
     def __repr__(self):
         return f'Type: Expiration card\nCard ID: {self.ticket_id}' \
                f'\nCredit: {self.balance}\nExpire Date: {self.expire_date}'
@@ -68,7 +66,6 @@ class DisposableTicket(Ticket):
         self.cost = 2
         self.balance = 1
 
-    @abstractmethod
     def expire(self):
         return self.balance
 
@@ -76,7 +73,6 @@ class DisposableTicket(Ticket):
         assert self.balance - 1 > 0, 'your ticket has been expired'
         self.balance -= 1
 
-    @abstractmethod
     def __repr__(self):
         return f'Type: Disposable card\n Card ID: {self.ticket_id}'
 
