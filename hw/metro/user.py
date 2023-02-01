@@ -34,7 +34,7 @@ class User:
         self.ticket_list.append(ticket)
 
     def use_ticket(self):
-        assert self.ticket_list is not None, 'you dont have any ticket'
+        assert len(self.ticket_list) != 0, 'you dont have any ticket'
         return self.ticket_list
 
     def show_ticket_list(self):
