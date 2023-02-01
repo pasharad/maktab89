@@ -131,7 +131,9 @@ def run():
                         elif lg_input == 4:
                             pass
                         elif lg_input == 5:
-                            pass
+                            clear()
+                            print('---- INFO ----')
+                            input(logged_user)
                         elif lg_input == 6:
                             with open(f'Users/{logged_user.user_id}.pickle', 'wb') as user:
                                 pickle.dump(logged_user, user)
