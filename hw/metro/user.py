@@ -43,7 +43,7 @@ class User:
 
     def __repr__(self):
         return f'User: {self.fname} {self.lname}\nUser ID: {self.user_id}' \
-               f'\nBank Account ID: {self.bank_account.bank_account_id}'
+               f'\nBank Account ID: {self.bank_account.bank_account_id}\nBalance: {self.bank_account.balance}'
 
 
 def name_validation(name: str):
