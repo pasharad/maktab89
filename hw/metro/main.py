@@ -88,8 +88,11 @@ def run():
                                 print('---- Deposit ----')
                                 bank_id = int(input('Enter your bank ID: '))
                                 if logged_user.bank_account.bank_account_id == bank_id:
-                                    amount = int(input('Enter amount: '))
-                                    logged_user.bank_account.deposit(amount)
+                                    try:
+                                        amount = int(input('Enter amount: '))
+                                        logged_user.bank_account.deposit(amount)
+                                    except AssertionError as e:
+                                        input(e)
                                 else:
                                     input('Bank ID was wrong!')
                             elif bank_input == 2:
@@ -97,8 +100,11 @@ def run():
                                 print('---- Withdraw ----')
                                 bank_id = int(input('Enter your bank ID: '))
                                 if logged_user.bank_account.bank_account_id == bank_id:
-                                    amount = int(input('Enter amount: '))
-                                    logged_user.bank_account.withdraw(amount)
+                                    try:
+                                        amount = int(input('Enter amount: '))
+                                        logged_user.bank_account.withdraw(amount)
+                                    except AssertionError as e:
+                                        input(e)
                                 else:
                                     input('Bank ID was wrong!')
                             elif bank_input == 3:
@@ -106,8 +112,11 @@ def run():
                                 print('---- Balance ----')
                                 bank_id = int(input('Enter your bank ID: '))
                                 if logged_user.bank_account.bank_account_id == bank_id:
-                                    input(logged_user.bank_account.show_balance(
-                                        f'{logged_user.fname} {logged_user.lname}'))
+                                    try:
+                                        input(logged_user.bank_account.show_balance(
+                                            f'{logged_user.fname} {logged_user.lname}'))
+                                    except AssertionError as e:
+                                        input(e)
                                 else:
                                     input('Bank ID was wrong!')
                             else:
@@ -129,7 +138,15 @@ def run():
                         elif lg_input == 3:
                             pass
                         elif lg_input == 4:
-                            pass
+                            clear()
+                            print('---- Ticket List ----')
+                            if len(logged_user.ticket_list) == 0:
+                                input('You dont have ticket')
+                            else:
+                                for i in logged_user.show_ticket_list():
+                                    print(i)
+                                input()
+
                         elif lg_input == 5:
                             clear()
                             print('---- INFO ----')
@@ -151,7 +168,7 @@ def run():
 if __name__ == '__main__':
     run()
 
-
+# 6087099462
 # 403b611d-da8b-4376-aa64-a10be8ae31fe
 # 4531473070
 # 4c7ef1c3-0f37-441e-907d-35ed85bed37d
