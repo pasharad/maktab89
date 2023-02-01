@@ -28,10 +28,10 @@ class Admin(User):
 
     @staticmethod
     def create_ticket(ticket_name):
-        if ticket_name == 'Chargeable':
+        if ticket_name == '1':
             new_card = ChargeableCard()
             return new_card
-        elif ticket_name == 'Expiration':
+        elif ticket_name == '2':
             new_card = ExpirationCard
             return new_card
         else:
