@@ -23,6 +23,7 @@ class ChargeableCard(Ticket):
     def __init__(self):
         super().__init__()
         self.cost = 5
+        self.user = None
 
     def expire(self):
         pass
@@ -46,6 +47,7 @@ class ExpirationCard(Ticket):
         self.cost = 55
         self.expire_date = self.creation_date + timedelta(days=365)
         self.balance = 50
+        self.user = None
 
     def expire(self):
         return datetime.now()
@@ -65,6 +67,7 @@ class DisposableTicket(Ticket):
         super().__init__()
         self.cost = 2
         self.balance = 1
+        self.user = None
 
     def expire(self):
         return self.balance
