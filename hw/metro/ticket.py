@@ -32,7 +32,7 @@ class ChargeableCard(Ticket):
         self.balance += amount
 
     def withdraw(self, amount):
-        assert self.balance - amount > 0, 'your charge is not enough, please charge'
+        assert self.balance - amount >= 0, 'your charge is not enough, please charge'
         self.balance -= amount
         return self.balance
 
@@ -53,7 +53,7 @@ class ExpirationCard(Ticket):
         return datetime.now()
 
     def withdraw(self, amount):
-        assert self.balance - amount > 0, 'your card has been expired'
+        assert self.balance - amount >= 0, 'your card has been expired'
         self.balance -= amount
         return self.balance
 
@@ -73,7 +73,7 @@ class DisposableTicket(Ticket):
         return self.balance
 
     def withdraw(self):
-        assert self.balance - 1 > 0, 'your ticket has been expired'
+        assert self.balance - 1 >= 0, 'your ticket has been expired'
         self.balance -= 1
 
     def __repr__(self):
