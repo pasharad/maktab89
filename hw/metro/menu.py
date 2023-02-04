@@ -22,7 +22,8 @@ class Menu:
     buy_ticket_menu = [
         'Chargeable',
         'Disposable(you can use it only once)',
-        'Date Expire']
+        'Date Expire',
+        'Go Back']
 
     admin_menu = [
         'Make transport',
