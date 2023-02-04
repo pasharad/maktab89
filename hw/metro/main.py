@@ -1,3 +1,5 @@
+import random
+
 from clear import clear
 from menu import *
 from bank_account import *
@@ -129,7 +131,29 @@ def run():
                                 print(f'|{v[0] + 1}. {v[1]}|')
                             buy_input = int(input('Enter your desire: '))
                             if buy_input == 1:
-                                pass
+                                ticket_lists = []
+                                for file in glob('Tickets/Chargeable/*.pickle'):
+                                    with open(file, 'rb') as ticket:
+                                        content = pickle.load(ticket)
+                                        if content.user is None:
+                                            ticket_lists.append(content)
+
+                                try:
+                                    if len(ticket_lists) == 0:
+                                        input('We dont have card!!')
+                                    else:
+                                        t = random.choice(ticket_lists)
+                                        clear()
+                                        logged_user.bank_account.withdraw(t.cost)
+                                        print('Your action was successful')
+                                        t.user = logged_user.user_id
+                                        logged_user.ticket_list.append(content)
+                                        with open(f'Tickets/Chargeable/{t.ticket_id}.pickle', 'wb') as ticket:
+                                            pickle.dump(t, ticket)
+                                        input(f'card_id: {t.ticket_id}')
+
+                                except Exception as e:
+                                    input(e)
                             elif buy_input == 2:
                                 pass
                             elif buy_input == 3:
@@ -242,13 +266,45 @@ def run():
                             admin_input = input('What is your Desire: ')
                             ticket_list = []
                             if admin_input == '1':
-                                # try:
-                                    # with open('Tickets/Chargeable/*.pickle', 'rb') as ticket
-                                pass
+                                clear()
+                                print('---- Chargeable Ticket ----')
+                                try:
+                                    n = 1
+                                    for file in glob('Tickets/Chargeable/*.pickle'):
+                                        with open(file, 'rb') as ticket:
+                                            content = pickle.load(ticket)
+                                        print(f'{n}: {content.ticket_id}')
+                                        n += 1
+                                    input()
+                                except FileNotFoundError:
+                                    input('We dont have tickets!!')
+
                             elif admin_input == '2':
-                                pass
+                                clear()
+                                print('---- Disposable Ticket ----')
+                                try:
+                                    n = 1
+                                    for file in glob('Tickets/Disposable/*.pickle'):
+                                        with open(file, 'rb') as ticket:
+                                            content = pickle.load(ticket)
+                                        print(f'{n}: {content.ticket_id}')
+                                        n += 1
+                                    input()
+                                except FileNotFoundError:
+                                    input('We dont have ticket!!')
                             elif admin_input == '3':
-                                pass
+                                clear()
+                                print('---- Expireable Ticket ----')
+                                try:
+                                    n = 1
+                                    for file in glob('Tickets/Expire/*.pickle'):
+                                        with open(file, 'rb') as ticket:
+                                            content = pickle.load(ticket)
+                                        print(f'{n}: {content.ticket_id}')
+                                        n += 1
+                                    input()
+                                except FileNotFoundError:
+                                    input('We dont have ticket!!')
                             else:
                                 break
                     else:
@@ -269,6 +325,6 @@ if __name__ == '__main__':
 # 4c7ef1c3-0f37-441e-907d-35ed85bed37d
 # adminID = 907823ac-0858-4683-b972-26fa8794a1f7
 # ali_admin = 15defe5d-e6ca-461f-808e-67cef6453099
-# chargeable = bc7b77d7-948e-47ba-bd65-ae0cf3ee3404
+# chargeable = bc7b77d7-948e-47ba-bd65-ae0cf3ee3404, 220182c1-58c9-4fc0-9880-e7616c039f1f
 # excard = 318ef8ff-e426-4ccf-ba49-c3eeb99c24fd
 # dsticket = cf7b3805-9734-4be4-a7d9-11a35289ce47
