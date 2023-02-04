@@ -32,8 +32,8 @@ class Admin(User):
             new_card = ChargeableCard()
             return new_card
         elif ticket_name == '2':
-            new_card = ExpirationCard
+            new_card = DisposableTicket()
             return new_card
         else:
-            new_card = DisposableTicket
+            new_card = ExpirationCard()
             return new_card
