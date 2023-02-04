@@ -154,10 +154,54 @@ def run():
 
                                 except Exception as e:
                                     input(e)
+
                             elif buy_input == 2:
-                                pass
+                                ticket_lists = []
+                                for file in glob('Tickets/Disposable/*.pickle'):
+                                    with open(file, 'rb') as ticket:
+                                        content = pickle.load(ticket)
+                                        if content.user is None:
+                                            ticket_lists.append(content)
+                                try:
+                                    if len(ticket_lists) == 0:
+                                        input('We dont have card!!')
+                                    else:
+                                        t = random.choice(ticket_lists)
+                                        clear()
+                                        logged_user.bank_account.withdraw(t.cost)
+                                        print('Your action was successful')
+                                        t.user = logged_user.user_id
+                                        logged_user.ticket_list.append(content)
+                                        with open(f'Tickets/Disposable/{t.ticket_id}.pickle', 'wb') as ticket:
+                                            pickle.dump(t, ticket)
+                                        input(f'card_id: {t.ticket_id}')
+
+                                except Exception as e:
+                                    input(e)
                             elif buy_input == 3:
-                                pass
+                                ticket_lists = []
+                                for file in glob('Tickets/Expire/*.pickle'):
+                                    with open(file, 'rb') as ticket:
+                                        content = pickle.load(ticket)
+                                        if content.user is None:
+                                            ticket_lists.append(content)
+
+                                try:
+                                    if len(ticket_lists) == 0:
+                                        input('We dont have card!!')
+                                    else:
+                                        t = random.choice(ticket_lists)
+                                        clear()
+                                        logged_user.bank_account.withdraw(t.cost)
+                                        print('Your action was successful')
+                                        t.user = logged_user.user_id
+                                        logged_user.ticket_list.append(content)
+                                        with open(f'Tickets/Expire/{t.ticket_id}.pickle', 'wb') as ticket:
+                                            pickle.dump(t, ticket)
+                                        input(f'card_id: {t.ticket_id}')
+
+                                except Exception as e:
+                                    input(e)
                             else:
                                 break
                         elif lg_input == 3:
