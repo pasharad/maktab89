@@ -1,13 +1,9 @@
-import random
-
-from clear import clear
-from menu import *
-from bank_account import *
-from ticket import *
-from user import *
 import pickle
+import random
 from glob import glob
 from admin import *
+from clear import clear
+from menu import *
 
 
 def run():
@@ -15,7 +11,7 @@ def run():
         clear()
         print(Menu.metro_menu)
         for v in enumerate(Menu.first_page_menu):
-            print(f'|{v[0]+1}. {v[1]}|')
+            print(f'|{v[0] + 1}. {v[1]}|')
         user_input = int(input('enter your command: '))
         if user_input == 1:
             clear()
@@ -147,7 +143,7 @@ def run():
                                         logged_user.bank_account.withdraw(t.cost)
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
-                                        logged_user.ticket_list.append(content)
+                                        logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Chargeable/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
                                         input(f'card_id: {t.ticket_id}')
@@ -171,7 +167,7 @@ def run():
                                         logged_user.bank_account.withdraw(t.cost)
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
-                                        logged_user.ticket_list.append(content)
+                                        logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Disposable/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
                                         input(f'card_id: {t.ticket_id}')
@@ -195,7 +191,7 @@ def run():
                                         logged_user.bank_account.withdraw(t.cost)
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
-                                        logged_user.ticket_list.append(content)
+                                        logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Expire/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
                                         input(f'card_id: {t.ticket_id}')
@@ -205,7 +201,31 @@ def run():
                             else:
                                 break
                         elif lg_input == 3:
-                            pass
+                            try:
+                                clear()
+                                print('---- Usage Ticket ----')
+                                for v in enumerate(logged_user.ticket_list):
+                                    print(f'|{v[0] + 1}. {v[1]}|')
+                                ticket_choose = int(input('Choose Ticket: '))
+                                if isinstance(logged_user.ticket_list[ticket_choose - 1], ChargeableCard):
+                                    pass
+                                elif isinstance(logged_user.ticket_list[ticket_choose - 1], DisposableTicket):
+                                    logged_user.ticket_list[ticket_choose - 1].withdraw()
+                                    input('Have good travel')
+                                    logged_user.ticket_list.remove(logged_user.ticket_list[ticket_choose - 1])
+                                elif isinstance(logged_user.ticket_list[ticket_choose - 1], ExpirationCard):
+                                    assert logged_user.ticket_list[ticket_choose - 1].expire_date > \
+                                           logged_user.ticket_list[ticket_choose - 1].expire(), 'Your Card Was Expired'
+                                    logged_user.ticket_list[ticket_choose - 1].withdraw(0.75)
+                                    input('Have good travel')
+                                    if logged_user.ticket_list[ticket_choose - 1].balance == 0 or \
+                                            logged_user.ticket_list[ticket_choose - 1].expire_date == \
+                                            logged_user.ticket_list[ticket_choose - 1].expire():
+                                        logged_user.ticket_list.remove(logged_user.ticket_list[ticket_choose - 1])
+                                else:
+                                    break
+                            except Exception as e:
+                                input(e)
                         elif lg_input == 4:
                             clear()
                             print('---- Ticket List ----')
@@ -263,96 +283,100 @@ def run():
                     else:
                         break
                 else:
-                    clear()
-                    print('---- Admin page ----')
-                    for v in enumerate(Menu.admin_menu):
-                        print(f'|{v[0] + 1}. {v[1]}|')
-                    cmd = input('CHOOSE: ')
-                    if cmd == '1':
-                        pass
-                    elif cmd == '2':
-                        pass
-                    elif cmd == '3':
+                    while 1:
                         clear()
-                        print('---- CREATE TICKET ----')
-                        for v in enumerate(Menu.buy_ticket_menu):
+                        print('---- Admin page ----')
+                        for v in enumerate(Menu.admin_menu):
                             print(f'|{v[0] + 1}. {v[1]}|')
-                        admin_input = input('What is your Desire: ')
-                        if admin_input == '1':
-                            clear()
-                            print('---- Chargeable Card ----')
-                            new_ticket = ChargeableCard()
-                            with open(f'Tickets/Chargeable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
-                                pickle.dump(new_ticket, ticket)
-                            input(new_ticket)
-                        elif admin_input == '2':
-                            clear()
-                            print('---- Expiration Card ----')
-                            new_ticket = ExpirationCard()
-                            with open(f'Tickets/Expire/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
-                                pickle.dump(new_ticket, ticket)
-                            input(new_ticket)
-                        elif admin_input == '3':
-                            clear()
-                            print('---- Disposable Ticket ----')
-                            new_ticket = DisposableTicket()
-                            with open(f'Tickets/Disposable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
-                                pickle.dump(new_ticket, ticket)
-                            input(new_ticket)
-                    elif cmd == '4':
-                        pass
-                    elif cmd == '5':
-                        while 1:
-                            clear()
-                            print('---- Ticket list ----')
-                            for v in enumerate(Menu.buy_ticket_menu):
-                                print(f'|{v[0] + 1}. {v[1]}|')
-                            admin_input = input('What is your Desire: ')
-                            ticket_list = []
-                            if admin_input == '1':
+                        cmd = input('CHOOSE: ')
+                        if cmd == '1':
+                            pass
+                        elif cmd == '2':
+                            pass
+                        elif cmd == '3':
+                            while 1:
                                 clear()
-                                print('---- Chargeable Ticket ----')
-                                try:
-                                    n = 1
-                                    for file in glob('Tickets/Chargeable/*.pickle'):
-                                        with open(file, 'rb') as ticket:
-                                            content = pickle.load(ticket)
-                                        print(f'{n}: {content.ticket_id}')
-                                        n += 1
-                                    input()
-                                except FileNotFoundError:
-                                    input('We dont have tickets!!')
+                                print('---- CREATE TICKET ----')
+                                for v in enumerate(Menu.buy_ticket_menu):
+                                    print(f'|{v[0] + 1}. {v[1]}|')
+                                admin_input = input('What is your Desire: ')
+                                if admin_input == '1':
+                                    clear()
+                                    print('---- Chargeable Card ----')
+                                    new_ticket = logged_admin.create_ticket(admin_input)
+                                    with open(f'Tickets/Chargeable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
+                                        pickle.dump(new_ticket, ticket)
+                                    input(new_ticket)
+                                elif admin_input == '2':
+                                    clear()
+                                    print('---- Disposable Card ----')
+                                    new_ticket = logged_admin.create_ticket(admin_input)
+                                    with open(f'Tickets/Disposable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
+                                        pickle.dump(new_ticket, ticket)
+                                    input(new_ticket)
+                                elif admin_input == '3':
+                                    clear()
+                                    print('---- Expiration Ticket ----')
+                                    new_ticket = logged_admin.create_ticket(admin_input)
+                                    with open(f'Tickets/Expire/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
+                                        pickle.dump(new_ticket, ticket)
+                                    input(new_ticket)
+                                else:
+                                    break
+                        elif cmd == '4':
+                            pass
+                        elif cmd == '5':
+                            while 1:
+                                clear()
+                                print('---- Ticket list ----')
+                                for v in enumerate(Menu.buy_ticket_menu):
+                                    print(f'|{v[0] + 1}. {v[1]}|')
+                                admin_input = input('What is your Desire: ')
+                                ticket_list = []
+                                if admin_input == '1':
+                                    clear()
+                                    print('---- Chargeable Ticket ----')
+                                    try:
+                                        n = 1
+                                        for file in glob('Tickets/Chargeable/*.pickle'):
+                                            with open(file, 'rb') as ticket:
+                                                content = pickle.load(ticket)
+                                            print(f'{n}: {content.ticket_id}')
+                                            n += 1
+                                        input()
+                                    except FileNotFoundError:
+                                        input('We dont have tickets!!')
 
-                            elif admin_input == '2':
-                                clear()
-                                print('---- Disposable Ticket ----')
-                                try:
-                                    n = 1
-                                    for file in glob('Tickets/Disposable/*.pickle'):
-                                        with open(file, 'rb') as ticket:
-                                            content = pickle.load(ticket)
-                                        print(f'{n}: {content.ticket_id}')
-                                        n += 1
-                                    input()
-                                except FileNotFoundError:
-                                    input('We dont have ticket!!')
-                            elif admin_input == '3':
-                                clear()
-                                print('---- Expireable Ticket ----')
-                                try:
-                                    n = 1
-                                    for file in glob('Tickets/Expire/*.pickle'):
-                                        with open(file, 'rb') as ticket:
-                                            content = pickle.load(ticket)
-                                        print(f'{n}: {content.ticket_id}')
-                                        n += 1
-                                    input()
-                                except FileNotFoundError:
-                                    input('We dont have ticket!!')
-                            else:
-                                break
-                    else:
-                        break
+                                elif admin_input == '2':
+                                    clear()
+                                    print('---- Disposable Ticket ----')
+                                    try:
+                                        n = 1
+                                        for file in glob('Tickets/Disposable/*.pickle'):
+                                            with open(file, 'rb') as ticket:
+                                                content = pickle.load(ticket)
+                                            print(f'{n}: {content.ticket_id}')
+                                            n += 1
+                                        input()
+                                    except FileNotFoundError:
+                                        input('We dont have ticket!!')
+                                elif admin_input == '3':
+                                    clear()
+                                    print('---- Expireable Ticket ----')
+                                    try:
+                                        n = 1
+                                        for file in glob('Tickets/Expire/*.pickle'):
+                                            with open(file, 'rb') as ticket:
+                                                content = pickle.load(ticket)
+                                            print(f'{n}: {content.ticket_id}')
+                                            n += 1
+                                        input()
+                                    except FileNotFoundError:
+                                        input('We dont have ticket!!')
+                                else:
+                                    break
+                        else:
+                            break
             except FileNotFoundError:
                 input('User Not Found!')
 
