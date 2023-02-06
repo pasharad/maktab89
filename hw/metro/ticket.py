@@ -45,9 +45,11 @@ class ChargeableCard(Ticket):
         if os_name == 'nt':
             chdir('Tickets/Chargeable')
             terminal(f'del {self.ticket_id}.pickle')
+            chdir('../..')
         else:
             chdir('Tickets/Chargeable')
             terminal(f'rm {self.ticket_id}.pickle')
+            chdir('../..')
 
     def __repr__(self):
         return f'Type: Chargeable card\n Card ID: {self.ticket_id}' \
@@ -73,9 +75,11 @@ class ExpirationCard(Ticket):
         if os_name == 'nt':
             chdir('Tickets/Expire')
             terminal(f'del {self.ticket_id}.pickle')
+            chdir('../..')
         else:
             chdir('Tickets/Expire')
             terminal(f'rm {self.ticket_id}.pickle')
+            chdir('../..')
 
     def __repr__(self):
         return f'Type: Expiration card\nCard ID: {self.ticket_id}' \
@@ -99,9 +103,11 @@ class DisposableTicket(Ticket):
         if os_name == 'nt':
             chdir('Tickets/Disposable')
             terminal(f'del {self.ticket_id}.pickle')
+            chdir('../..')
         else:
             chdir('Tickets/Disposable')
             terminal(f'rm {self.ticket_id}.pickle')
+            chdir('../..')
 
     def __repr__(self):
         return f'Type: Disposable card\n Card ID: {self.ticket_id}'
