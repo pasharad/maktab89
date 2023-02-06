@@ -208,7 +208,8 @@ def run():
                                     print(f'|{v[0] + 1}. {v[1]}|')
                                 ticket_choose = int(input('Choose Ticket: '))
                                 if isinstance(logged_user.ticket_list[ticket_choose - 1], ChargeableCard):
-                                    pass
+                                    logged_user.ticket_list[ticket_choose - 1].withdraw(0.5)
+                                    input('Have good travel')
                                 elif isinstance(logged_user.ticket_list[ticket_choose - 1], DisposableTicket):
                                     logged_user.ticket_list[ticket_choose - 1].withdraw()
                                     input('Have good travel')
@@ -228,6 +229,17 @@ def run():
                                 input(e)
                         elif lg_input == 4:
                             clear()
+                            print('---- Charge Card ----')
+                            for ticket in enumerate(logged_user.ticket_list):
+                                if isinstance(ticket[1], ChargeableCard):
+                                    print(f'|{ticket[0] + 1}. {ticket[1]}|')
+                            choose = int(input('Choose your card: '))
+                            amount = int(input('amount:\n1.10\n2.20\n3.50\n4.100\nEnter: '))
+                            price_list = [10, 20, 50, 100]
+                            logged_user.ticket_list[choose - 1].deposit(price_list[amount - 1])
+                            input(f'Your Charge was successful\ncredit: {logged_user.ticket_list[choose - 1].balance}')
+                        elif lg_input == 5:
+                            clear()
                             print('---- Ticket List ----')
                             if len(logged_user.ticket_list) == 0:
                                 input('You dont have ticket')
@@ -236,11 +248,11 @@ def run():
                                     print(i)
                                 input()
 
-                        elif lg_input == 5:
+                        elif lg_input == 6:
                             clear()
                             print('---- INFO ----')
                             input(logged_user)
-                        elif lg_input == 6:
+                        elif lg_input == 7:
                             with open(f'Users/{logged_user.user_id}.pickle', 'wb') as user:
                                 pickle.dump(logged_user, user)
                             break
@@ -396,3 +408,6 @@ if __name__ == '__main__':
 # chargeable = bc7b77d7-948e-47ba-bd65-ae0cf3ee3404, 220182c1-58c9-4fc0-9880-e7616c039f1f
 # excard = 318ef8ff-e426-4ccf-ba49-c3eeb99c24fd
 # dsticket = cf7b3805-9734-4be4-a7d9-11a35289ce47
+
+# 49cba062-7214-40d9-95a2-382d53ba7bbb
+# 6488537414
