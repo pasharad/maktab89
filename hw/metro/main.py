@@ -400,16 +400,3 @@ def run():
 
 if __name__ == '__main__':
     run()
-
-# 6087099462
-# 403b611d-da8b-4376-aa64-a10be8ae31fe
-# 4531473070
-# 4c7ef1c3-0f37-441e-907d-35ed85bed37d
-# adminID = 907823ac-0858-4683-b972-26fa8794a1f7
-# ali_admin = 15defe5d-e6ca-461f-808e-67cef6453099
-# chargeable = bc7b77d7-948e-47ba-bd65-ae0cf3ee3404, 220182c1-58c9-4fc0-9880-e7616c039f1f
-# excard = 318ef8ff-e426-4ccf-ba49-c3eeb99c24fd
-# dsticket = cf7b3805-9734-4be4-a7d9-11a35289ce47
-
-# 49cba062-7214-40d9-95a2-382d53ba7bbb
-# 6488537414
