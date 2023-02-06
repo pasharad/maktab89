@@ -9,6 +9,7 @@ class Menu:
         'Bank Account Management',
         'Buy Ticket',
         'Use_ticket',
+        'Charge_card',
         'Ticket List',
         'Account Info',
         'Log out']
@@ -22,14 +23,26 @@ class Menu:
     buy_ticket_menu = [
         'Chargeable',
         'Disposable(you can use it only once)',
-        'Date Expire']
+        'Date Expire',
+        'Go Back']
 
     admin_menu = [
         'Make transport',
         'Edit transport',
+        'Show Available Transport',
+        'Make ticket',
+        'Ban User',
+        'Show Ticket Created',
         'logout'
     ]
 
+    metro_menu = '''
+    __  __      _
+|  \/  | ___| |_ _ __ ___
+| |\/| |/ _ \ __| '__/ _ 
+| |  | |  __/ |_| | | (_) |
+|_|  |_|\___|\__|_|  \___/\n
+'''
 
 # menu = Menu
 # for v in enumerate(menu.buy_ticket_menu):
