@@ -304,10 +304,43 @@ def run():
                             print(f'|{v[0] + 1}. {v[1]}|')
                         cmd = input('CHOOSE: ')
                         if cmd == '1':
-                            pass
+                            clear()
+                            print('---- Make New Travel ----')
+                            travel_id = input('Enter Travel ID: ')
+                            origin = input('Enter origin: ')
+                            destination = input('Enter Destination: ')
+                            logged_admin.make_transport(travel_id, origin, destination)
                         elif cmd == '2':
-                            pass
+                            clear()
+                            print('---- Edit Travel ----')
+                            logged_admin.check_transport()
+                            transport_list = []
+                            for transport in logged_admin.transport:
+                                if transport == 'Unavailable':
+                                    transport_list.append(transport)
+                            if len(transport_list) == 0:
+                                input('Are Transport is Available')
+                            else:
+                                for i in enumerate(transport_list):
+                                    print(f'{i[0] + 1}\n{i[1]}')
+                                travel = int(input('Choose travel for change: '))
+                                travel_id = input('Enter Travel ID: ')
+                                origin = input('Enter origin: ')
+                                destination = input('Enter Destination: ')
+                                logged_admin.edit_transport(transport_list[travel - 1], travel_id, origin,
+                                                            destination)
                         elif cmd == '3':
+                            clear()
+                            print('---- Show Available Travel ----')
+                            logged_admin.check_transport()
+                            if len(logged_admin.transport) == 0:
+                                input('We Dont Have Any Available Transport')
+                            else:
+                                for transport in enumerate(logged_admin.transport):
+                                    if transport[1].status == 'Available':
+                                        print(f'{transport[0] + 1}\n{transport[1]}')
+                                input()
+                        elif cmd == '4':
                             while 1:
                                 clear()
                                 print('---- CREATE TICKET ----')
@@ -337,9 +370,13 @@ def run():
                                     input(new_ticket)
                                 else:
                                     break
-                        elif cmd == '4':
-                            pass
                         elif cmd == '5':
+                            clear()
+                            print('---- Ban User ----')
+                            user_id = input('Enter User ID To Ban: ')
+                            logged_admin.delete(user_id)
+                            input('User Banned!!!')
+                        elif cmd == '6':
                             while 1:
                                 clear()
                                 print('---- Ticket list ----')
@@ -390,6 +427,8 @@ def run():
                                 else:
                                     break
                         else:
+                            with open(f'Admins/{logged_admin.user_id}.pickle', 'wb') as n_admin:
+                                pickle.dump(logged_admin, n_admin)
                             break
             except FileNotFoundError:
                 input('User Not Found!')
