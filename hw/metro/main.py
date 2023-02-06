@@ -214,6 +214,7 @@ def run():
                                     logged_user.ticket_list[ticket_choose - 1].withdraw()
                                     input('Have good travel')
                                     logged_user.ticket_list.remove(logged_user.ticket_list[ticket_choose - 1])
+                                    logged_user.ticket_list[ticket_choose - 1].delete()
                                 elif isinstance(logged_user.ticket_list[ticket_choose - 1], ExpirationCard):
                                     assert logged_user.ticket_list[ticket_choose - 1].expire_date > \
                                            logged_user.ticket_list[ticket_choose - 1].expire(), 'Your Card Was Expired'
@@ -223,6 +224,7 @@ def run():
                                             logged_user.ticket_list[ticket_choose - 1].expire_date == \
                                             logged_user.ticket_list[ticket_choose - 1].expire():
                                         logged_user.ticket_list.remove(logged_user.ticket_list[ticket_choose - 1])
+                                        logged_user.ticket_list[ticket_choose - 1].delete()
                                 else:
                                     break
                             except Exception as e:
