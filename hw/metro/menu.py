@@ -9,6 +9,7 @@ class Menu:
         'Bank Account Management',
         'Buy Ticket',
         'Use_ticket',
+        'Charge_card',
         'Ticket List',
         'Account Info',
         'Log out']
