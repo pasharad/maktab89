@@ -1,13 +1,16 @@
 from user import *
 from ticket import *
+from datetime import datetime, timedelta
 
 
 class Transportation:
-    def __init__(self, tr_id, origin, destination, cost):
+    def __init__(self, tr_id, origin, destination):
         self.tr_id = tr_id
         self.origin = origin
         self.destination = destination
-        self.cost = cost
+        self.start_time = datetime.now()
+        self.end_time = self.start_time + timedelta(minutes=30)
+        self.status = 'Available'
 
 
 class Admin(User):
@@ -15,14 +18,13 @@ class Admin(User):
         super().__init__(fname, lname, nat_code, date_of_birth, password)
         self.transport = []
 
-    def make_transport(self, tr_id, origin, destination, cost):
-        new_transport = Transportation(tr_id, origin, destination, cost)
+    def make_transport(self, tr_id, origin, destination):
+        new_transport = Transportation(tr_id, origin, destination)
         self.transport.append(new_transport)
 
     @classmethod
-    def edit_transport(cls, tr_id, origin, destination, cost):
+    def edit_transport(cls, tr_id, origin, destination):
         cls.tr_id = tr_id
-        cls.cost = cost
         cls.origin = origin
         cls.destination = destination
 
@@ -48,3 +50,9 @@ class Admin(User):
             chdir('Users')
             terminal(f'rm {user_id}.pickle')
             chdir('..')
+
+    def check_transport(self):
+        time = datetime.now()
+        for travel in self.transport:
+            if travel.endtime <= time:
+                travel.status = 'Unavailable'
