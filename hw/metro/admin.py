@@ -12,6 +12,9 @@ class Transportation:
         self.end_time = self.start_time + timedelta(minutes=30)
         self.status = 'Available'
 
+    def __repr__(self):
+        return f'ID: {self.tr_id}\nOrigin: {self.origin}\nDestination: {self.destination}'
+
 
 class Admin(User):
     def __init__(self, fname, lname, nat_code, date_of_birth, password):
