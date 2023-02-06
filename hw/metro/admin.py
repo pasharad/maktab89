@@ -37,3 +37,14 @@ class Admin(User):
         else:
             new_card = ExpirationCard()
             return new_card
+
+    @staticmethod
+    def delete(user_id):
+        if os_name == 'nt':
+            chdir('Users')
+            terminal(f'del {user_id}.pickle')
+            chdir('..')
+        else:
+            chdir('Users')
+            terminal(f'rm {user_id}.pickle')
+            chdir('..')
