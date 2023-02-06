@@ -25,7 +25,7 @@ class Admin(User):
         new_transport = Transportation(tr_id, origin, destination)
         self.transport.append(new_transport)
 
-    @classmethod
+    @staticmethod
     def edit_transport(cls, tr_id, origin, destination):
         cls.tr_id = tr_id
         cls.origin = origin
