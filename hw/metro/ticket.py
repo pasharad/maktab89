@@ -1,6 +1,7 @@
 from uuid import uuid4
 from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
+from os import name as os_name, system as terminal
 
 
 class Ticket(ABC):
@@ -9,9 +10,14 @@ class Ticket(ABC):
         self.ticket_id = uuid4()
         self.cost = 0
         self.balance = 0
+        self.user = None
 
     @abstractmethod
     def expire(self):
+        pass
+
+    @abstractmethod
+    def delete(self):
         pass
 
     @abstractmethod
@@ -23,7 +29,6 @@ class ChargeableCard(Ticket):
     def __init__(self):
         super().__init__()
         self.cost = 5
-        self.user = None
 
     def expire(self):
         pass
@@ -36,6 +41,14 @@ class ChargeableCard(Ticket):
         self.balance -= amount
         return self.balance
 
+    def delete(self):
+        if os_name == 'nt':
+            terminal('cd Tickets/Chargeable')
+            terminal(f'del {self.ticket_id}.pickle')
+        else:
+            terminal('cd Tickets/Chargeable')
+            terminal(f'rm {self.ticket_id}.pickle')
+
     def __repr__(self):
         return f'Type: Chargeable card\n Card ID: {self.ticket_id}' \
                f'\nCredit: {self.balance}'
@@ -47,7 +60,6 @@ class ExpirationCard(Ticket):
         self.cost = 55
         self.expire_date = self.creation_date + timedelta(days=365)
         self.balance = 50
-        self.user = None
 
     def expire(self):
         return datetime.now()
@@ -56,6 +68,14 @@ class ExpirationCard(Ticket):
         assert self.balance - amount >= 0, 'your card has been expired'
         self.balance -= amount
         return self.balance
+
+    def delete(self):
+        if os_name == 'nt':
+            terminal('cd Tickets/Expire')
+            terminal(f'del {self.ticket_id}.pickle')
+        else:
+            terminal('cd Tickets/Expire')
+            terminal(f'rm {self.ticket_id}.pickle')
 
     def __repr__(self):
         return f'Type: Expiration card\nCard ID: {self.ticket_id}' \
@@ -67,7 +87,6 @@ class DisposableTicket(Ticket):
         super().__init__()
         self.cost = 2
         self.balance = 1
-        self.user = None
 
     def expire(self):
         return self.balance
@@ -75,6 +94,14 @@ class DisposableTicket(Ticket):
     def withdraw(self):
         assert self.balance - 1 >= 0, 'your ticket has been expired'
         self.balance -= 1
+
+    def delete(self):
+        if os_name == 'nt':
+            terminal('cd Tickets/Disposable')
+            terminal(f'del {self.ticket_id}.pickle')
+        else:
+            terminal('cd Tickets/Disposable')
+            terminal(f'rm {self.ticket_id}.pickle')
 
     def __repr__(self):
         return f'Type: Disposable card\n Card ID: {self.ticket_id}'
