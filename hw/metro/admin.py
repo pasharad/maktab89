@@ -57,5 +57,5 @@ class Admin(User):
     def check_transport(self):
         time = datetime.now()
         for travel in self.transport:
-            if travel.endtime <= time:
+            if travel.end_time <= time:
                 travel.status = 'Unavailable'
