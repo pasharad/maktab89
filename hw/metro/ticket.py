@@ -1,7 +1,7 @@
 from uuid import uuid4
 from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
-from os import name as os_name, system as terminal
+from os import name as os_name, system as terminal, chdir
 
 
 class Ticket(ABC):
@@ -43,10 +43,10 @@ class ChargeableCard(Ticket):
 
     def delete(self):
         if os_name == 'nt':
-            terminal('cd Tickets/Chargeable')
+            chdir('Tickets/Chargeable')
             terminal(f'del {self.ticket_id}.pickle')
         else:
-            terminal('cd Tickets/Chargeable')
+            chdir('Tickets/Chargeable')
             terminal(f'rm {self.ticket_id}.pickle')
 
     def __repr__(self):
@@ -71,10 +71,10 @@ class ExpirationCard(Ticket):
 
     def delete(self):
         if os_name == 'nt':
-            terminal('cd Tickets/Expire')
+            chdir('Tickets/Expire')
             terminal(f'del {self.ticket_id}.pickle')
         else:
-            terminal('cd Tickets/Expire')
+            chdir('Tickets/Expire')
             terminal(f'rm {self.ticket_id}.pickle')
 
     def __repr__(self):
@@ -97,10 +97,10 @@ class DisposableTicket(Ticket):
 
     def delete(self):
         if os_name == 'nt':
-            terminal('cd Tickets/Disposable')
+            chdir('Tickets/Disposable')
             terminal(f'del {self.ticket_id}.pickle')
         else:
-            terminal('cd Tickets/Disposable')
+            chdir('Tickets/Disposable')
             terminal(f'rm {self.ticket_id}.pickle')
 
     def __repr__(self):
