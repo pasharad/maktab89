@@ -270,7 +270,7 @@ def run():
                     logged_admin: Admin = pickle.load(admin)
                 adm_menu = ['Register New Admin',
                             'EXIT']
-                if admin_id == '907823ac-0858-4683-b972-26fa8794a1f7':
+                if admin_id == '0cc0a947-bd91-4228-b7b0-0fb39944a90c':
                     for v in enumerate(adm_menu):
                         print(f'|{v[0] + 1}. {v[1]}|')
                     cmd = input('Choose: ')
