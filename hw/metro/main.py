@@ -4,6 +4,7 @@ from glob import glob
 from admin import *
 from clear import clear
 from menu import *
+import metro_log
 
 
 def run():
@@ -29,11 +30,13 @@ def run():
                 new_user = User(fname, lname, nat_code, date_of_birth, password)
                 with open(f'Users/{new_user.user_id}.pickle', 'wb') as user:
                     pickle.dump(new_user, user)
+                metro_log.user_logger.info(f'User created, UserID: {new_user.user_id}')
                 clear()
                 print('---- welcome ----')
                 input(f'You registered successful\nyour id is: {new_user.user_id}\nyour bank account ID: '
                       f'{new_user.bank_account.bank_account_id}')
             except AssertionError as e:
+                metro_log.error_logger.error(f'Register failed by Error: {e}')
                 input(e)
         elif user_input == 2:
             clear()
@@ -70,6 +73,7 @@ def run():
                 try:
                     with open(f'Users/{user_id}.pickle', 'rb') as user:
                         logged_user: User = pickle.load(user)
+                    metro_log.user_logger.info(f'User {logged_user.user_id} logged in!')
                     while 1:
                         clear()
                         print(f'---- {logged_user.fname} {logged_user.lname} ----')
@@ -90,9 +94,13 @@ def run():
                                     try:
                                         amount = int(input('Enter amount: '))
                                         logged_user.bank_account.deposit(amount)
-                                    except AssertionError as e:
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} '
+                                                                   f'Deposit {amount}!')
+                                    except Exception as e:
+                                        metro_log.error_logger.error(f'Deposit failed by Error: {e}')
                                         input(e)
                                 else:
+                                    metro_log.error_logger.error(f'User {logged_user.user_id} Enter wrong Bank ID')
                                     input('Bank ID was wrong!')
                             elif bank_input == 2:
                                 clear()
@@ -102,9 +110,12 @@ def run():
                                     try:
                                         amount = int(input('Enter amount: '))
                                         logged_user.bank_account.withdraw(amount)
-                                    except AssertionError as e:
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} Withdraw {amount}')
+                                    except Exception as e:
+                                        metro_log.error_logger.error(f'Withdraw failed by Error {e}')
                                         input(e)
                                 else:
+                                    metro_log.error_logger.error(f'User {logged_user.user_id} Enter wrong Bank ID')
                                     input('Bank ID was wrong!')
                             elif bank_input == 3:
                                 clear()
@@ -114,9 +125,12 @@ def run():
                                     try:
                                         input(logged_user.bank_account.show_balance(
                                             f'{logged_user.fname} {logged_user.lname}'))
-                                    except AssertionError as e:
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} check Balance!')
+                                    except Exception as e:
+                                        metro_log.error_logger.error(f'Show Balance failed by Error {e}')
                                         input(e)
                                 else:
+                                    metro_log.error_logger.error(f'User {logged_user.user_id} Enter wrong Bank ID')
                                     input('Bank ID was wrong!')
                             else:
                                 break
@@ -133,22 +147,27 @@ def run():
                                         content = pickle.load(ticket)
                                         if content.user is None:
                                             ticket_lists.append(content)
-
                                 try:
                                     if len(ticket_lists) == 0:
+                                        metro_log.error_logger.error('Card was not created!!!')
                                         input('We dont have card!!')
                                     else:
                                         t = random.choice(ticket_lists)
                                         clear()
                                         logged_user.bank_account.withdraw(t.cost)
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} Withdraw {t.cost}')
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
                                         logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Chargeable/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} Buy Chargeable Card '
+                                                                   f'{t.ticket_id}')
                                         input(f'card_id: {t.ticket_id}')
 
                                 except Exception as e:
+                                    metro_log.error_logger.error(f'User: {logged_user.user_id}'
+                                                                 f', Buy ticket failed by Error: {e}')
                                     input(e)
 
                             elif buy_input == 2:
@@ -160,19 +179,26 @@ def run():
                                             ticket_lists.append(content)
                                 try:
                                     if len(ticket_lists) == 0:
+                                        metro_log.error_logger.error('Card was not created!!!')
                                         input('We dont have card!!')
                                     else:
                                         t = random.choice(ticket_lists)
                                         clear()
                                         logged_user.bank_account.withdraw(t.cost)
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} Withdraw {t.cost}')
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
                                         logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Disposable/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
+                                            metro_log.user_logger.info(
+                                                f'User {logged_user.user_id} Buy Chargeable Card '
+                                                f'{t.ticket_id}')
                                         input(f'card_id: {t.ticket_id}')
 
                                 except Exception as e:
+                                    metro_log.error_logger.error(f'User: {logged_user.user_id}'
+                                                                 f', Buy ticket failed by Error: {e}')
                                     input(e)
                             elif buy_input == 3:
                                 ticket_lists = []
@@ -184,19 +210,25 @@ def run():
 
                                 try:
                                     if len(ticket_lists) == 0:
+                                        metro_log.error_logger.error('Card was not created!!!')
                                         input('We dont have card!!')
                                     else:
                                         t = random.choice(ticket_lists)
                                         clear()
                                         logged_user.bank_account.withdraw(t.cost)
+                                        metro_log.user_logger.info(f'User {logged_user.user_id} Withdraw {t.cost}')
                                         print('Your action was successful')
                                         t.user = logged_user.user_id
                                         logged_user.ticket_list.append(t)
                                         with open(f'Tickets/Expire/{t.ticket_id}.pickle', 'wb') as ticket:
                                             pickle.dump(t, ticket)
+                                        metro_log.user_logger.info(
+                                            f'User {logged_user.user_id} Buy Chargeable Card '
+                                            f'{t.ticket_id}')
                                         input(f'card_id: {t.ticket_id}')
-
                                 except Exception as e:
+                                    metro_log.error_logger.error(f'User: {logged_user.user_id}'
+                                                                 f', Buy ticket failed by Error: {e}')
                                     input(e)
                             else:
                                 break
@@ -209,9 +241,15 @@ def run():
                                 ticket_choose = int(input('Choose Ticket: '))
                                 if isinstance(logged_user.ticket_list[ticket_choose - 1], ChargeableCard):
                                     logged_user.ticket_list[ticket_choose - 1].withdraw(0.5)
+                                    metro_log.user_logger.info(f'User {logged_user.user_id} use Chargeable Card'
+                                                               f'{logged_user.ticket_list[ticket_choose - 1].ticket_id}'
+                                                               )
                                     input('Have good travel')
                                 elif isinstance(logged_user.ticket_list[ticket_choose - 1], DisposableTicket):
                                     logged_user.ticket_list[ticket_choose - 1].withdraw()
+                                    metro_log.user_logger.info(f'User {logged_user.user_id} use Disposable Ticket'
+                                                               f'{logged_user.ticket_list[ticket_choose - 1].ticket_id}'
+                                                               )
                                     input('Have good travel')
                                     logged_user.ticket_list[ticket_choose - 1].delete()
                                     logged_user.ticket_list.remove(logged_user.ticket_list[ticket_choose - 1])
@@ -219,6 +257,9 @@ def run():
                                     assert logged_user.ticket_list[ticket_choose - 1].expire_date > \
                                            logged_user.ticket_list[ticket_choose - 1].expire(), 'Your Card Was Expired'
                                     logged_user.ticket_list[ticket_choose - 1].withdraw(0.75)
+                                    metro_log.user_logger.info(f'User {logged_user.user_id} use Expiration Card'
+                                                               f'{logged_user.ticket_list[ticket_choose - 1].ticket_id}'
+                                                               )
                                     input('Have good travel')
                                     if logged_user.ticket_list[ticket_choose - 1].balance == 0 or \
                                             logged_user.ticket_list[ticket_choose - 1].expire_date == \
@@ -228,6 +269,7 @@ def run():
                                 else:
                                     break
                             except Exception as e:
+                                metro_log.error_logger.error(f'Ticket Usage failed by Error {e}')
                                 input(e)
                         elif lg_input == 4:
                             clear()
@@ -238,28 +280,39 @@ def run():
                             choose = int(input('Choose your card: '))
                             amount = int(input('amount:\n1.10\n2.20\n3.50\n4.100\nEnter: '))
                             price_list = [10, 20, 50, 100]
+                            logged_user.bank_account.withdraw(price_list[amount - 1])
+                            metro_log.user_logger.info(f'User {logged_user.user_id} Charging Card '
+                                                       f'Card ID {logged_user.ticket_list[choose - 1].ticket_id}'
+                                                       f'amount {price_list[amount - 1]}')
                             logged_user.ticket_list[choose - 1].deposit(price_list[amount - 1])
+                            metro_log.user_logger.info(f'Card ID {logged_user.ticket_list[choose - 1].ticket_id} was '
+                                                       f'charged')
                             input(f'Your Charge was successful\ncredit: {logged_user.ticket_list[choose - 1].balance}')
                         elif lg_input == 5:
                             clear()
                             print('---- Ticket List ----')
                             if len(logged_user.ticket_list) == 0:
+                                metro_log.error_logger.error(f'User {logged_user.user_id} Dont have Tickets!!')
                                 input('You dont have ticket')
                             else:
                                 for i in logged_user.show_ticket_list():
                                     print(i)
+                                metro_log.user_logger.info(f'User {logged_user.user_id} Check Ticket list!!')
                                 input()
 
                         elif lg_input == 6:
                             clear()
                             print('---- INFO ----')
+                            metro_log.user_logger.info(f'User {logged_user.user_id} Check INFO!!!')
                             input(logged_user)
                         elif lg_input == 7:
                             with open(f'Users/{logged_user.user_id}.pickle', 'wb') as user:
                                 pickle.dump(logged_user, user)
+                            metro_log.user_logger.info(f'User {logged_user.user_id} logged out!')
                             break
 
                 except FileNotFoundError:
+                    metro_log.error_logger.error('Can not login/ User Not Found!!!')
                     input('User Not Found!')
 
         elif user_input == 3:
@@ -288,15 +341,18 @@ def run():
                             new_admin = Admin(fname, lname, nat_code, date_of_birth, password)
                             with open(f'Admins/{new_admin.user_id}.pickle', 'wb') as n_admin:
                                 pickle.dump(new_admin, n_admin)
+                            metro_log.admin_logger.info(f'Admin {new_admin.user_id} is created!!!')
                             clear()
                             print('---- welcome ----')
                             input(f'You registered successful\nyour id is: {new_admin.user_id}\nyour bank account ID: '
                                   f'{new_admin.bank_account.bank_account_id}')
                         except AssertionError as e:
+                            metro_log.error_logger.error(f'Admin Registration failed by Error {e}')
                             input(e)
                     else:
                         break
                 else:
+                    metro_log.admin_logger.info(f'Admin {logged_admin.user_id} logged in!!!')
                     while 1:
                         clear()
                         print('---- Admin page ----')
@@ -310,6 +366,7 @@ def run():
                             origin = input('Enter origin: ')
                             destination = input('Enter Destination: ')
                             logged_admin.make_transport(travel_id, origin, destination)
+                            metro_log.admin_logger.info(f'Travel {travel_id} made by Admin {logged_admin.user_id} ')
                         elif cmd == '2':
                             clear()
                             print('---- Edit Travel ----')
@@ -329,9 +386,12 @@ def run():
                                 destination = input('Enter Destination: ')
                                 logged_admin.edit_transport(transport_list[travel - 1], travel_id, origin,
                                                             destination)
+                                metro_log.admin_logger.info(f'Travel {travel_id} Edited by Admin {logged_admin.user_id}'
+                                                            )
                         elif cmd == '3':
                             clear()
                             print('---- Show Available Travel ----')
+                            metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Check  Travels')
                             logged_admin.check_transport()
                             if len(logged_admin.transport) == 0:
                                 input('We Dont Have Any Available Transport')
@@ -353,6 +413,7 @@ def run():
                                     new_ticket = logged_admin.create_ticket(admin_input)
                                     with open(f'Tickets/Chargeable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
                                         pickle.dump(new_ticket, ticket)
+                                    metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Create Chargeable Card')
                                     input(new_ticket)
                                 elif admin_input == '2':
                                     clear()
@@ -360,13 +421,15 @@ def run():
                                     new_ticket = logged_admin.create_ticket(admin_input)
                                     with open(f'Tickets/Disposable/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
                                         pickle.dump(new_ticket, ticket)
+                                    metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Create Disposable Card')
                                     input(new_ticket)
                                 elif admin_input == '3':
                                     clear()
-                                    print('---- Expiration Ticket ----')
+                                    print('---- Expiration Card ----')
                                     new_ticket = logged_admin.create_ticket(admin_input)
                                     with open(f'Tickets/Expire/{new_ticket.ticket_id}.pickle', 'wb') as ticket:
                                         pickle.dump(new_ticket, ticket)
+                                    metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Create Expiration Card')
                                     input(new_ticket)
                                 else:
                                     break
@@ -375,8 +438,10 @@ def run():
                             print('---- Ban User ----')
                             user_id = input('Enter User ID To Ban: ')
                             logged_admin.delete(user_id)
+                            metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Ban User {user_id}!!!')
                             input('User Banned!!!')
                         elif cmd == '6':
+                            metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Check Card Created!!!')
                             while 1:
                                 clear()
                                 print('---- Ticket list ----')
@@ -396,6 +461,8 @@ def run():
                                             n += 1
                                         input()
                                     except FileNotFoundError:
+                                        metro_log.error_logger.error('Show card created but Any Card has been created!!'
+                                                                     '!')
                                         input('We dont have tickets!!')
 
                                 elif admin_input == '2':
@@ -410,6 +477,8 @@ def run():
                                             n += 1
                                         input()
                                     except FileNotFoundError:
+                                        metro_log.error_logger.error('Show card created but Any Card has been created!!'
+                                                                     '!')
                                         input('We dont have ticket!!')
                                 elif admin_input == '3':
                                     clear()
@@ -423,15 +492,19 @@ def run():
                                             n += 1
                                         input()
                                     except FileNotFoundError:
+                                        metro_log.error_logger.error('Show card created but Any Card has been created!!'
+                                                                     '!')
                                         input('We dont have ticket!!')
                                 else:
                                     break
                         else:
                             with open(f'Admins/{logged_admin.user_id}.pickle', 'wb') as n_admin:
                                 pickle.dump(logged_admin, n_admin)
+                            metro_log.admin_logger.info(f'Admin {logged_admin.user_id} Logged out!!!')
                             break
             except FileNotFoundError:
-                input('User Not Found!')
+                metro_log.error_logger.error('Any Admin has been found!!!')
+                input('Admin Not Found!')
 
         else:
             break
