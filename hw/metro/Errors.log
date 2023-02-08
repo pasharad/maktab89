@@ -1,4 +1,0 @@
-2023-02-07 16:18:07,530 - User 797663d8-0e7c-4a28-b89a-9841b39196bb Enter wrong Bank ID
-2023-02-07 16:18:47,655 - Deposit failed by Error: invalid literal for int() with base 10: 'p'
-2023-02-07 16:20:15,052 - Withdraw failed by Error your balance is not enough!!!
-2023-02-07 16:20:36,935 - Show Balance failed by Error your balance is not enough!!!
