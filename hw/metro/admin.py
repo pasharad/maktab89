@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 
 
 class Transportation:
+    end_time: datetime
+
     def __init__(self, tr_id, origin, destination):
         self.tr_id = tr_id
         self.origin = origin
