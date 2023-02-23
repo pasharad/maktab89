@@ -18,15 +18,10 @@ class User(BaseModel):
 async def signup(request: Request, username = Form(),
                  password = Form(), email=Form()):
     new_user = User(username=username, password=password, email=email)
-    try:
-        db_user = orm.Users.create(username= new_user.username,
+    db_user = orm.Users.create(username= new_user.username,
                                    password=new_user.password,
                                    email=new_user.email,
                                     creation_date=date.today())
-    except AssertionError as e:
-        raise HTTPException(status_code=500, detail=e)
-    except TypeError as t:
-        return {'msg' : e}
     
     return TEMPLATE.TemplateResponse(
         'signup.html',
@@ -35,15 +30,25 @@ async def signup(request: Request, username = Form(),
         }
     )
 @app.get("/signup")
-async def get(request:Request):
+async def get(request: Request):
     return TEMPLATE.TemplateResponse('signup.html',{'request':request})
 
-@app.get("/success")
-async def success(request:Request):
-    return TEMPLATE.TemplateResponse('success.html',
+@app.post("/success")
+async def success(request:Request, username = Form(),
+                 password = Form(), email=Form()):
+    try:
+        new_user = User(username=username, password=password, email=email)
+        db_user = orm.Users.create(username= new_user.username,
+                                   password=new_user.password,
+                                   email=new_user.email,
+                                    creation_date=date.today())
+        return TEMPLATE.TemplateResponse('succes.html',
                                      {
                                         'request':request,
                                      })
+    except Exception:
+        raise HTTPException(status_code=500,detail='user already has been sign up!')
+    
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=8000, log_level='debug')

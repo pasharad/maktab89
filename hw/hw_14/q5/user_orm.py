@@ -1,7 +1,7 @@
 from peewee import SqliteDatabase, Model, CharField, DateField
 from pydantic import BaseModel
 
-db = SqliteDatabase("hw_14/q5/users.db")
+db = SqliteDatabase("users.db")
 
 class Users(Model):
     username = CharField(unique=True)
