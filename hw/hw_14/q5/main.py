@@ -5,7 +5,7 @@ from datetime import date
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
-TEMPLATE = Jinja2Templates("hw_14/templates")
+TEMPLATE = Jinja2Templates("templates")
 
 class User(BaseModel):
     username:str
