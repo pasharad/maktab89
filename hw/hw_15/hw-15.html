@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            display: flex;
+        }
+
+        #part-one {
+            background-color: blueviolet;
+            width: 200px;
+            height: 400px;
+        }
+
+        .border {
+            border-color: blueviolet;
+            border-width: 5px;
+            border-style: solid;
+            border-radius: 50%;   
+        }
+
+        #profile {
+            width: 150px;
+            height: 150px;
+            margin: 15px;
+        }
+
+        .white_color {
+            color: aliceblue;
+            margin-left: 15%;
+        }
+        .text-size {
+            font-size: 12px;
+        }
+        #special {
+            margin-top: -5%;
+            margin-bottom: 10%;
+        }
+        #name {
+            font-size: 20px;
+        }
+        #part-two {
+            background-color: rgb(255, 255, 255);
+            width: 600px;
+        }
+        .paraf {
+            margin-left: 30px;
+        }
+        .heading {
+            margin-top: 15px;
+            margin-bottom: 5%;
+            color: palevioletred;
+        }
+        #p1 {
+            margin-bottom: 5%;
+            
+        }
+        .d1 {
+            display: flex;
+        }
+        #dokme {
+            background-color: blueviolet;
+            border-radius: 20px;
+            height: 15px;
+            font-size: 8px;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: 5px;
+        }
+        #icons {
+            display: flex; 
+        }
+
+        .fa {
+            padding-right: -10px;
+            font-size: 14px;
+            width: 30px;
+            margin-bottom: 5px;
+            
+        }
+        .fa:hover {
+            opacity: 0.7;
+        }
+        .fa-facebook {
+            color: white;
+            margin-left: 15%;
+        }
+        .fa-twitter {
+            color: white;
+        }
+        .fa-dribbble {
+            color: white;
+        }
+        .fa-linkedin {
+            color: white;
+        }
+        .fa-flickr {
+            color: white;
+        }
+        a {
+            text-decoration: none;
+        }
+        .container {
+            width: 100%;
+            background-color: gray;
+            border-radius: 20px;
+            margin-left: 30px;
+            height: 50%;
+            margin-top: 18px;
+        } 
+        .skills {
+            text-align: right;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .python {
+            width: 90%;
+            background-color: brown;
+        }
+        .fast {
+            width: 70%;
+            background-color: brown;
+        }
+        .skill-bar {
+            display: flex;
+        }
+        
+   </style>
+</head>
+<body>
+    <div id="part-one">
+        <center>
+        <img id="profile" class="border" src="/home/pasha/Desktop/html_css_hw/IMG_8462.jpg" alt="pasha">
+        </center>
+        <h2 id="name" class="white_color">Pasha Rad</h2>
+        <p id="special" class="white_color text-size">python developer</p>
+        
+        <div id="icons">
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-dribbble"></a>
+            <a href="#" class="fa fa-linkedin"></a>
+            <a href="#" class="fa fa-flickr"></a>
+        </div>
+        
+        <a href="" class="white_color text-size">ABOUT ME</a><br>
+        <a href="" class="white_color text-size">EXPERIENCE</a><br>
+        <a href="" class="white_color text-size">EDUCATION</a><br>
+        <a href="" class="white_color text-size">WORKS</a><br>
+        <a href="" class="white_color text-size">CONTACT</a>
+        
+    </div>
+    <div id="part-two">
+        <div class="d1">
+        <h2 class="paraf heading">ABOUT ME</h2>
+        <button id="dokme">Download Resume</button>
+        </div>
+        <p id="p1" class="paraf">Hello, My name is Pasha Rad.
+            <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod iure ea eos aut iusto harum vitae veniam inventore magnam totam dolorum deleniti nulla, consequuntur aliquid voluptates quibusdam reiciendis modi alias.</span>
+        </p>
+        <p class="paraf"><b>Birthday:</b>June 13,2001</p>
+        <p class="paraf"><b>Location:</b>Majidie st,Iran</p>
+        <p class="paraf"><b>Email:</b>pasharad2231@gmail.com</p>
+        <p class="paraf"><b>Phone:</b>+989029999825</p>
+        <div class="skill-bar">
+                <p class="paraf">Python</p>
+                <div class="container">
+                    <div class="skills python">90%</div>
+                </div>
+                <p class="paraf">FastAPI</p>
+                <div class="container">
+                    <div class="skills fast">70%</div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
